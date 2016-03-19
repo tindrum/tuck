@@ -12,15 +12,16 @@ def main(name, as_cowboy, history):
     greet = 'Howdy' if as_cowboy else 'Hello'
     click.echo('{0}, {1}.'.format(greet, name))
     if history:
-        shell_command = 'bash -i -c "whoami"'
+        shell_command = 'bash -ic "tail -5 $HISTFILE"'
         event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
-        #
+        # #
+        hfile = os.system("echo $HISTFILE")
         output = event.communicate()
         # # localHistory = os.system("history 2")
         # # hist = ""
         # # os.system('history 4')
         # # click.echo('History is {0}'.format(os.system('history 4')))
-        click.echo('listing is  {0}'.format(os.system('tail /Users/tindrum/.bash_history')))
+        click.echo('current history file is  {0}'.format(hfile))
         # click.echo('some other thing is  {0}'.format(output))
         click.echo('history  {0}'.format(output))
         # TODO: it shows the listing from current directory, but will it always? 
