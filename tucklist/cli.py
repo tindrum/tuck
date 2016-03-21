@@ -12,18 +12,27 @@ def main(name, as_cowboy, history):
     greet = 'Howdy' if as_cowboy else 'Hello'
     click.echo('{0}, {1}.'.format(greet, name))
     if history:
-        shell_command = 'bash -ic "tail -5 $HISTFILE"'
-        event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
+        # shell_command = 'bash -ic "tail -5 $HISTFILE"'
+        # event = Popen(shell_command, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT)
         # #
-        hfile = os.system("echo $HISTFILE")
-        output = event.communicate()
+        # hfile = os.system("echo $HISTFILE")
+        # output = event.communicate()
         # # localHistory = os.system("history 2")
         # # hist = ""
         # # os.system('history 4')
         # # click.echo('History is {0}'.format(os.system('history 4')))
-        click.echo('current history file is  {0}'.format(hfile))
+        # click.echo('current history file is  {0}'.format(hfile))
         # click.echo('some other thing is  {0}'.format(output))
-        click.echo('history  {0}'.format(output))
+        history = os.environ['TUCK_HISTORY']
+        # fooVal = os.environ['FOO']
+        latest = os.environ['TUCK_LAST']
+        click.echo(latest)
+        # click.echo(fooVal)
+        click.echo(type(os.environ['TUCK_HISTORY']))
+        for line in history:
+            click.echo('history  {0}'.format(line))
+            
+        click.echo(type(history))
         # TODO: it shows the listing from current directory, but will it always? 
         #       I guess since I'm really interested in the history, I don't care much
         #       which path is actually being used. Unless it matters for 'history' too.
