@@ -29,10 +29,12 @@ def main(name, as_cowboy, history):
         click.echo(latest)
         # click.echo(fooVal)
         click.echo(type(os.environ['TUCK_HISTORY']))
+        click.echo(latest)
         for line in history:
             click.echo('history  {0}'.format(line))
             
         click.echo(type(history))
+        click.echo(history)
         # TODO: it shows the listing from current directory, but will it always? 
         #       I guess since I'm really interested in the history, I don't care much
         #       which path is actually being used. Unless it matters for 'history' too.
