@@ -1,19 +1,21 @@
 #! /usr/bin/env python3
 
-import os
+import sys, os
 import argparse
+import re
+
+
+# last = (os.environ['TUCK_LAST'])
 
 parser = argparse.ArgumentParser()
-parser.add_argument("echo", help="echo the string you use here")
+parser.add_argument("last", help="last commands issued")
 parser.parse_args()
 
 args = parser.parse_args()
-print(args.echo)
+print(args.last)
 
 
 # print ("hello there")
 
-print (type(os.environ['TUCK_HISTORY']))
-print (os.environ['TUCK_HISTORY'])
+# print (last)
 
-print (os.environ['TUCK_LAST'])
