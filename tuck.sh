@@ -22,7 +22,7 @@ function tuck () {
     else
         last=`history 2`
         ~/bin/tucklist/tuck.py "$last $@"
-        echo "last command tucked"
+        # echo "last command tucked"
     fi
 }
 bold=$(tput bold)
