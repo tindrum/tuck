@@ -24,7 +24,7 @@ hist_len = len(sys.argv)
 history_glob = sys.argv[hist_len - 1]
 sys.argv[hist_len - 1] = "--foo"
 
-print("The history_glob is: \n" + history_glob)
+# print("The history_glob is: \n" + history_glob)
 
 parser = argparse.ArgumentParser()
 
@@ -47,21 +47,21 @@ if args.note:
     note = args.note[0]
 else:
     note = "no note"
-print("***** The note: " + str(note))
+# print("***** The note: " + str(note))
     
 if args.back:
     back = args.back[0]
-    print("***** The back number: " + str(back))
+    # print("***** The back number: " + str(back))
 else:
     back = None
-    print("***** We have to pick the penultimate item")
+    # print("***** We have to pick the penultimate item")
 
     
 history_array = history_glob.splitlines()
 history_dict = {}
 history_pattern = re.compile(r"^\s*(\d+)\s*(.*)\s*")
-print("history_array is a " + str(type(history_array)))
-print("listing of history_array")
+# print("history_array is a " + str(type(history_array)))
+# print("listing of history_array")
 for item in history_array:
     # print(item + " is a " + str(type(item)))
     this_history = re.match(history_pattern, item)
@@ -72,29 +72,33 @@ print("There are " + str(len(history_dict)) + " items in the dictionary")
     
 if back:
     user_selected_item = history_dict[back]
-    print("if user_selected_item: " + str(user_selected_item))
+    # print("if user_selected_item: " + str(user_selected_item))
 else:
-    print("history_array[0]")
-    print(history_array[0])
-    this_history = re.match(history_pattern, history_array[0])
+    # print("history_array[-2]")
+    # print(history_array[-2])
+    this_history = re.match(history_pattern, history_array[-2])
     user_selected_item = this_history.group(2)
-    print("else user_selected_item: " + str(user_selected_item))
-
-print("We think the thing you want is: " + user_selected_item)
-
+    # print("else user_selected_item: " + str(user_selected_item))
 
 if args.suite:
     command_suite = args.suite[0]
 else:
     command_suite = user_selected_item.split(' ', 1)[0]
-print("***** The command suite is : " + command_suite)
+# print("***** The command suite is : " + command_suite)
     
 user = "tindrum"
+
+print(color.GREEN + "*******  tucking " + color.BOLD + color.PURPLE + user_selected_item + color.END)
+if note != "":
+    print(color.GREEN + "**     with note "  + color.BOLD + color.DARKCYAN + ((note[0:35] + " ...") if len(note) > 35 else note) + color.END)
+else:
+    print(color.GREEN + "**     with no note ")
+print(color.GREEN + "** command suite " + color.BOLD + color.DARKCYAN + command_suite + color.END)
 
 # base_command = "tuck"
 DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + command_suite)
 
-print(DATA)
+# print(DATA)
 # go to the url
 try:
     req = urllib.request.Request(url='http://192.168.99.100:8000/tuck/cli/add/tindrum', data=DATA, method='POST')
