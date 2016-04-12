@@ -32,6 +32,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--foo', nargs='?', const='bar', default='baz')
 parser.add_argument('--note', '-n', nargs=1)
 parser.add_argument('--back', '-b', nargs=1)
+parser.add_argument('--suite', '-s', nargs=1)
 # parser.add_argument('history', nargs='+')
 # parser.add_argument('--hist_item', required=False)
 parser.parse_args()
@@ -81,17 +82,17 @@ else:
 
 print("We think the thing you want is: " + user_selected_item)
 
-# regex to strip off the history number
-# command = re.match(r"\s*\d+\s+(\w.+)", argarray[0])
-# print(" ")
-# print("the actual command from the user")
-# print(" ")
-# print(command.group(1))
-# cli_command = command.group(1)
+
+if args.suite:
+    command_suite = args.suite[0]
+else:
+    command_suite = user_selected_item.split(' ', 1)[0]
+print("***** The command suite is : " + command_suite)
+    
 user = "tindrum"
 
-base_command = "tuck"
-DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + base_command)
+# base_command = "tuck"
+DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + command_suite)
 
 print(DATA)
 # go to the url
