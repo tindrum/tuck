@@ -68,7 +68,7 @@ for item in history_array:
     # print("match: " + this_history.group(1) + " : " + this_history.group(2))
     history_dict[this_history.group(1)] = this_history.group(2)
 
-print("There are " + str(len(history_dict)) + " items in the dictionary")
+# print("There are " + str(len(history_dict)) + " items in the dictionary")
     
 if back:
     user_selected_item = history_dict[back]
@@ -101,7 +101,7 @@ DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note="
 # print(DATA)
 # go to the url
 try:
-    req = urllib.request.Request(url='http://192.168.99.100:8000/tuck/cli/add/tindrum', data=DATA, method='POST')
+    req = urllib.request.Request(url='http://192.168.99.100:8000/tuck/cli_add/tindrum', data=DATA, method='POST')
     with urllib.request.urlopen(req) as f:
         print(f.read(300).decode('utf-8'))
 except Exception as e:
