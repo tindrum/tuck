@@ -15,7 +15,7 @@
 # env TUCK_HISTORY=$(history) env TUCK_LAST=$(history 2) /Users/tindrum/Documents/Sp_2016_local/CS_462_local/TuckList/cli/tucklist/python-tucklist/tuck.py "$@"
 # echo "*** function tuck loading ***"
 function tuck () {
-    echo "lookin it up..."
+    # echo "lookin it up..."
     last=`history 50`
     # hist_item="last"
     # while getopts ":p:" opt; do

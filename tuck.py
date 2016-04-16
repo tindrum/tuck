@@ -6,6 +6,13 @@ import re
 import urllib.request
 import json
 
+user = "tindrum"
+
+site_url = "http://192.168.99.100:8000"
+tuck_cli_action = "/tuck/cli_add/"
+user_url = site_url + tuck_cli_action + user
+
+
 # Colors that can be used in terminal output
 class color:
    PURPLE = '\033[95m'
@@ -32,6 +39,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--foo', nargs='?', const='bar', default='baz')
 parser.add_argument('--note', '-n', nargs=1)
 parser.add_argument('--back', '-b', nargs=1)
+parser.add_argument('--username', '-u', nargs=1)
 parser.add_argument('--suite', '-s', nargs=1)
 # parser.add_argument('history', nargs='+')
 # parser.add_argument('--hist_item', required=False)
@@ -42,6 +50,16 @@ parser.parse_args()
 args = parser.parse_args()
 # print("hist_item is: " + args.hist_item)
 # print("last is: " + args.last)
+
+# fake a tuck from another user easily
+if args.username:
+    user_url = site_url + tuck_cli_action + args.username[0]
+    user = args.username[0]
+    print("****************************************")
+    print("Using a different username for this one:")
+    print(user)
+    print("****************************************")
+    
 
 if args.note:
     note = args.note[0]
@@ -86,8 +104,6 @@ else:
     command_suite = user_selected_item.split(' ', 1)[0]
 # print("***** The command suite is : " + command_suite)
     
-user = "tindrum"
-
 print(color.GREEN + "*******  tucking " + color.BOLD + color.PURPLE + user_selected_item + color.END)
 if note != "":
     print(color.GREEN + "**     with note "  + color.BOLD + color.DARKCYAN + ((note[0:35] + " ...") if len(note) > 35 else note) + color.END)
@@ -101,7 +117,7 @@ DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note="
 # print(DATA)
 # go to the url
 try:
-    req = urllib.request.Request(url='http://192.168.99.100:8000/tuck/cli_add/tindrum', data=DATA, method='POST')
+    req = urllib.request.Request(url=user_url, data=DATA, method='POST')
     with urllib.request.urlopen(req) as f:
         print(f.read(300).decode('utf-8'))
 except Exception as e:
