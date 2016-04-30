@@ -6,8 +6,6 @@ import re
 import urllib.request
 import json
 
-# TODO: read the user from a config file
-user = "tindrum"
 
 # set up the url for the site
 # TODO: change for production to tuck.magentabackpack.com
@@ -18,12 +16,6 @@ tuck_cli_action = "/tuck/cli_add/"
 tuck_search_action = "/everlist/cleverlist/"
 
 # TODO: create REST endpoint for searching
-
-# concatenate the whole url that will be used
-user_url = site_url + tuck_cli_action + user
-search_url = site_url + tuck_search_action + user
-# Data itself is in POST data
-
 
 # Colors that can be used in terminal output
 class color:
@@ -56,6 +48,9 @@ parser.parse_args()
 
 args = parser.parse_args()
 
+# TODO: read the user from a config file
+user = "tindrum"
+
 # fake a tuck from another user easily
 # TODO: disable this from production code
 if args.username:
@@ -67,10 +62,18 @@ if args.username:
     print("****************************************")
     
 
+# concatenate the whole url that will be used
+user_url = site_url + tuck_cli_action + user
+search_url = site_url + tuck_search_action + user
+# Data itself is in POST data
+
+
+
+
 if args.find:
     print(args.find)
     find_args = ' '.join(args.find)
-
+    
     # build POST data
     DATA=str.encode("user=" + user + "&find=" + find_args)
 
