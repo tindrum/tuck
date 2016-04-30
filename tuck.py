@@ -5,11 +5,34 @@ import argparse
 import re
 import urllib.request
 import json
+import configparser
+# https://docs.python.org/3.3/library/configparser.html
 
+# import yaml
+
+# with open('.tuck_config', 'r') as f:
+#     doc = yaml.load(f)
+#
+# site_url = doc["site"]["url"]
+#
+# user = doc["user"]["username"]
+# secret_word = doc["user"]["security_string"]
 
 # set up the url for the site
 # TODO: change for production to tuck.magentabackpack.com
 site_url = "http://192.168.99.100:8000"
+user = "tindrum"
+
+
+# TODO: read the user from a config file
+user = "tindrum"
+
+# TODO: add security_string to all POST data, 
+# for cheap security
+
+# TODO: add security_string to config file
+
+
 
 # set up REST endpoints for commands
 tuck_cli_action = "/tuck/cli_add/"
@@ -47,9 +70,6 @@ parser.add_argument('--find', '-f', nargs='+')
 parser.parse_args()
 
 args = parser.parse_args()
-
-# TODO: read the user from a config file
-user = "tindrum"
 
 # fake a tuck from another user easily
 # TODO: disable this from production code
