@@ -8,43 +8,21 @@ import json
 import configparser
 # https://docs.python.org/3.3/library/configparser.html
 
+# read config file settings
 config = configparser.ConfigParser()
-
 config.read('.tuck_config')
-# with open('.tuck_config', 'r') as f:
-#     doc = yaml.load(f)
-#
-# site_url = doc["site"]["url"]
-#
-# user = doc["user"]["username"]
-# secret_word = doc["user"]["security_string"]
-
-# set up the url for the site
-# TODO: change for production to tuck.magentabackpack.com
-# site_url = "http://192.168.99.100:8000"
-# user = "tindrum"
-
-# print(config.sections())
-# print(config.get('Username', 'guest'))
 user = config['TUCK']['Username']
 site_url = config['TUCK']['Server']
-
-
-# TODO: read the user from a config file
-# user = "tindrum"
+echo_level = config.getint('TUCK', 'EchoLevel', fallback=2)
 
 # TODO: add security_string to all POST data, 
 # for cheap security
 
 # TODO: add security_string to config file
 
-
-
 # set up REST endpoints for commands
 tuck_cli_action = "/tuck/cli_add/"
 tuck_search_action = "/everlist/cleverlist/"
-
-# TODO: create REST endpoint for searching
 
 # Colors that can be used in terminal output
 class color:
@@ -59,7 +37,7 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
-
+# this and the -foo flag are a kludge to get it to work
 hist_len = len(sys.argv)
 history_glob = sys.argv[hist_len - 1]
 sys.argv[hist_len - 1] = "--foo"
@@ -67,18 +45,25 @@ sys.argv[hist_len - 1] = "--foo"
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--foo', nargs='?', const='bar', default='baz')
+# parser.add_argument('--foo', nargs='?', const='bar', default='baz')
+parser.add_argument('--foo', action="store_true")
 parser.add_argument('--note', '-n', nargs=1)
 parser.add_argument('--back', '-b', nargs=1)
 parser.add_argument('--username', '-u', nargs=1)
 parser.add_argument('--suite', '-s', nargs=1)
 parser.add_argument('--find', '-f', nargs='+')
-parser.parse_args()
+parser.add_argument('--configure', action="store_true")
+# parser.parse_args()
 
 args = parser.parse_args()
 
+
+if args.configure:
+    print('Set your username and secret code here')
+    exit
+    
 # fake a tuck from another user easily
-# TODO: disable this from production code
+# TODO: disable fake user from production code
 if args.username:
     user_url = site_url + tuck_cli_action + args.username[0]
     user = args.username[0]
@@ -149,12 +134,13 @@ if (args.back or args.note):
     else:
         command_suite = user_selected_item.split(' ', 1)[0]
     
-    print(color.GREEN + "*******  tucking " + color.BOLD + color.PURPLE + user_selected_item + color.END)
-    if note != "":
-        print(color.GREEN + "**     with note "  + color.BOLD + color.DARKCYAN + ((note[0:35] + " ...") if len(note) > 35 else note) + color.END)
-    else:
-        print(color.GREEN + "**     with no note ")
-    print(color.GREEN + "** command suite " + color.BOLD + color.DARKCYAN + command_suite + color.END)
+    if echo_level:
+        print(color.GREEN + "*******  tucking " + color.BOLD + color.PURPLE + user_selected_item + color.END)
+        if note != "":
+            print(color.GREEN + "**     with note "  + color.BOLD + color.DARKCYAN + ((note[0:35] + " ...") if len(note) > 35 else note) + color.END)
+        else:
+            print(color.GREEN + "**     with no note ")
+        print(color.GREEN + "** command suite " + color.BOLD + color.DARKCYAN + command_suite + color.END)
 
     # build POST data
     DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + command_suite)
