@@ -8,8 +8,9 @@ import json
 import configparser
 # https://docs.python.org/3.3/library/configparser.html
 
-# import yaml
+config = configparser.ConfigParser()
 
+config.read('.tuck_config')
 # with open('.tuck_config', 'r') as f:
 #     doc = yaml.load(f)
 #
@@ -20,12 +21,17 @@ import configparser
 
 # set up the url for the site
 # TODO: change for production to tuck.magentabackpack.com
-site_url = "http://192.168.99.100:8000"
-user = "tindrum"
+# site_url = "http://192.168.99.100:8000"
+# user = "tindrum"
+
+# print(config.sections())
+# print(config.get('Username', 'guest'))
+user = config['TUCK']['Username']
+site_url = config['TUCK']['Server']
 
 
 # TODO: read the user from a config file
-user = "tindrum"
+# user = "tindrum"
 
 # TODO: add security_string to all POST data, 
 # for cheap security
