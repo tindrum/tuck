@@ -61,6 +61,17 @@ args = parser.parse_args()
 
 if args.configure:
     print('Set your username and secret code here')
+    newUserName = input("Please enter your username: ")
+    newSecretWord = input("Please enter your secret word: ")
+    config['TUCK']['Username'] = newUserName
+    config['TUCK']['security_string'] = newSecretWord
+    print("Make sure you have set the same secret word at " + site_url + "/users/~update/")
+    f = open('/Users/tindrum/bin/tucklist/.tuck_config', mode='w')
+    if f:
+        config.write(f)
+    else:
+        print("File didn't open. You can always edit .tuck_config yourself.")
+    
     exit
     
 # fake a tuck from another user easily

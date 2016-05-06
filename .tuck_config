@@ -1,6 +1,6 @@
 [TUCK]
-Server = http://192.168.99.100:8000
-Username = tindrum
-security_string = ADBEcf
-EchoLevel = 1
+server = http://192.168.99.100:8000
+username = tindrum
+security_string = forward
+echolevel = 1
 
