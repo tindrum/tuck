@@ -1,6 +1,7 @@
 #! /usr/bin/env python3
 
 import sys, os
+# import getpass
 import argparse
 import re
 import urllib.request
@@ -38,6 +39,7 @@ class color:
    UNDERLINE = '\033[4m'
    END = '\033[0m'
 
+    
 # this and the -foo flag are a kludge to get it to work
 hist_len = len(sys.argv)
 history_glob = sys.argv[hist_len - 1]
@@ -133,7 +135,8 @@ if (args.back or args.note):
 
     for item in history_array:
         this_history = re.match(history_pattern, item)
-        history_dict[this_history.group(1)] = this_history.group(2)
+        if ( this_history ):
+            history_dict[this_history.group(1)] = this_history.group(2)
 
     if back:
         user_selected_item = history_dict[back]
