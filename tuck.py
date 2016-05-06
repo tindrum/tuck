@@ -10,10 +10,11 @@ import configparser
 
 # read config file settings
 config = configparser.ConfigParser()
-config.read('.tuck_config')
+config.read('/Users/tindrum/bin/tucklist/.tuck_config')
 user = config['TUCK']['Username']
 site_url = config['TUCK']['Server']
 echo_level = config.getint('TUCK', 'EchoLevel', fallback=2)
+secret = config.get('TUCK', 'security_string', fallback="secret")
 
 # TODO: add security_string to all POST data, 
 # for cheap security
@@ -86,13 +87,13 @@ if args.find:
     find_args = ' '.join(args.find)
     
     # build POST data
-    DATA=str.encode("user=" + user + "&find=" + find_args)
+    DATA=str.encode("user=" + user + "&find=" + find_args + "&secret=" + secret)
 
     # go to the url
     try:
         req = urllib.request.Request(url=search_url, data=DATA, method='POST')
         with urllib.request.urlopen(req) as f:
-            print(f.read(300).decode('utf-8'))
+            print(f.read(3000).decode('utf-8'))
     except Exception as e:
         print("search is busted.")
         # TODO: better error handling
@@ -143,7 +144,7 @@ if (args.back or args.note):
         print(color.GREEN + "** command suite " + color.BOLD + color.DARKCYAN + command_suite + color.END)
 
     # build POST data
-    DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + command_suite)
+    DATA=str.encode("cli_command=" + user_selected_item + "&user=" + user + "&note=" + note + "&base_command=" + command_suite + "&secret=" + secret)
 
     # go to the url
     try:
