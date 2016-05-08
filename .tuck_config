@@ -1,6 +1,6 @@
 [TUCK]
 server = http://192.168.99.100:8000
-username = tindrum
-security_string = abcdef
+username = deb
+security_string = chesapeake
 echolevel = 1
 
