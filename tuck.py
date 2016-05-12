@@ -8,9 +8,11 @@ import configparser
 
 # read config file settings
 config = configparser.ConfigParser()
-config.read('~/.tuck/.tuck_config')
-user = config['TUCK']['Username']
-site_url = config['TUCK']['Server']
+scriptpath = os.path.dirname(__file__)
+configfile = os.path.join(scriptpath, '.tuck_config')
+config.read(configfile)
+user = config.get('TUCK', 'Username', fallback="guest")
+site_url = config.get('TUCK', 'Server', fallback="http://tuck.magentabackpack.com")
 echo_level = config.getint('TUCK', 'EchoLevel', fallback=2)
 secret = config.get('TUCK', 'security_string', fallback="secret")
 
@@ -58,10 +60,14 @@ if args.configure:
     print('Set your username and secret code here')
     newUserName = input("Please enter your username: ")
     newSecretWord = input("Please enter your secret word: ")
-    config['TUCK']['Username'] = newUserName
-    config['TUCK']['security_string'] = newSecretWord
+    config = configparser.RawConfigParser()
+    config.add_section('TUCK')
+    config.set('TUCK', 'Server', site_url)
+    config.set('TUCK', 'Username', newUserName)
+    config.set('TUCK', 'security_string', newSecretWord)
+    config.set('TUCK', 'echolevel', echo_level)
     print("Make sure you have set the same secret word at " + site_url + "/users/~update/")
-    f = open('/Users/tindrum/bin/tucklist/.tuck_config', mode='w')
+    f = open(configfile, mode='w')
     if f:
         config.write(f)
     else:
