@@ -1,5 +1,5 @@
 #!/bin/bash
-​
+
 mkdir -p ~/.tuck
 # Copy your files to ~/.tuck
 cp tuck.sh ~/.tuck
