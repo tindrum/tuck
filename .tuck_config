@@ -1,6 +1,6 @@
 [TUCK]
 server = http://tuck.magentabackpack.com
-username = tindrum
-security_string = abcdef
+username = guest
+security_string = csuf2016
 echolevel = 1
 
