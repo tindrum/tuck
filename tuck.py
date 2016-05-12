@@ -1,13 +1,10 @@
 #! /usr/bin/env python3
 
 import sys, os
-# import getpass
 import argparse
 import re
 import urllib.request
-# import json
 import configparser
-# https://docs.python.org/3.3/library/configparser.html
 
 # read config file settings
 config = configparser.ConfigParser()
@@ -17,10 +14,6 @@ site_url = config['TUCK']['Server']
 echo_level = config.getint('TUCK', 'EchoLevel', fallback=2)
 secret = config.get('TUCK', 'security_string', fallback="secret")
 
-# TODO: add security_string to all POST data, 
-# for cheap security
-
-# TODO: add security_string to config file
 
 # set up REST endpoints for commands
 tuck_cli_action = "/tuck/cli_add/"
@@ -40,7 +33,8 @@ class color:
    END = '\033[0m'
 
     
-# this and the -foo flag are a kludge to get it to work
+# this and the -foo flag are a kludge 
+# to accept all params from parent bash script
 hist_len = len(sys.argv)
 history_glob = sys.argv[hist_len - 1]
 sys.argv[hist_len - 1] = "--foo"
@@ -48,15 +42,14 @@ sys.argv[hist_len - 1] = "--foo"
 
 parser = argparse.ArgumentParser()
 
-# parser.add_argument('--foo', nargs='?', const='bar', default='baz')
+# If you want to change the single-character flags, 
+# just don't change the word ones. 
 parser.add_argument('--foo', action="store_true")
 parser.add_argument('--note', '-n', nargs=1)
 parser.add_argument('--back', '-b', nargs=1)
-parser.add_argument('--username', '-u', nargs=1)
 parser.add_argument('--suite', '-s', nargs=1)
 parser.add_argument('--find', '-f', nargs='+')
 parser.add_argument('--configure', action="store_true")
-# parser.parse_args()
 
 args = parser.parse_args()
 
@@ -76,24 +69,10 @@ if args.configure:
     
     exit
     
-# fake a tuck from another user easily
-# TODO: disable fake user from production code
-if args.username:
-    user_url = site_url + tuck_cli_action + args.username[0]
-    user = args.username[0]
-    print("****************************************")
-    print("Using a different username for this one:")
-    print(user)
-    print("****************************************")
-    
-
 # concatenate the whole url that will be used
 user_url = site_url + tuck_cli_action + user
 search_url = site_url + tuck_search_action + user
 # Data itself is in POST data
-
-
-
 
 if args.find:
     print(args.find)
@@ -128,7 +107,6 @@ if (args.back or args.note):
     else:
         back = None
 
-    
     history_array = history_glob.splitlines()
     history_dict = {}
     history_pattern = re.compile(r"^\s*(\d+)\s*(.*)\s*")
