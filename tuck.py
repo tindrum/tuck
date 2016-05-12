@@ -5,7 +5,7 @@ import sys, os
 import argparse
 import re
 import urllib.request
-import json
+# import json
 import configparser
 # https://docs.python.org/3.3/library/configparser.html
 
