@@ -9,7 +9,7 @@ cp requirements.txt ~/.tuck
 
 pyvenv ~/.tuck/.venv
 source ~/.tuck/.venv/bin/activate
-pip install ~/.tuck/requirements.txt
+pip install -r ~/.tuck/requirements.txt
 
 # Do something to update the PATH variable in ~/.bashrc, or
 # just print out info to user:
