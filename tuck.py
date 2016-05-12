@@ -8,7 +8,7 @@ import configparser
 
 # read config file settings
 config = configparser.ConfigParser()
-config.read('/Users/tindrum/bin/tucklist/.tuck_config')
+config.read('~/.tuck/.tuck_config')
 user = config['TUCK']['Username']
 site_url = config['TUCK']['Server']
 echo_level = config.getint('TUCK', 'EchoLevel', fallback=2)
