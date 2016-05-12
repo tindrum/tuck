@@ -104,7 +104,7 @@ if args.find:
 
     # go to the url
     try:
-        req = urllib.request.Request(url=search_url, data=DATA, method='POST')
+        req = urllib.request.Request(url=search_url, data=DATA, method='POST', headers={'User-Agent':"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"})
         with urllib.request.urlopen(req) as f:
             print(f.read(3000).decode('utf-8'))
     except Exception as e:
@@ -162,7 +162,7 @@ if (args.back or args.note):
 
     # go to the url
     try:
-        req = urllib.request.Request(url=user_url, data=DATA, method='POST')
+        req = urllib.request.Request(url=user_url, data=DATA, method='POST', headers={'User-Agent':"Mozilla/5.0 (X11; U; Linux i686) Gecko/20071127 Firefox/2.0.0.11"})
         with urllib.request.urlopen(req) as f:
             print(f.read(300).decode('utf-8'))
     except Exception as e:

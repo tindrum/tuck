@@ -1,6 +1,6 @@
 [TUCK]
-server = http://192.168.99.100:8000
-username = deb
-security_string = chesapeake
+server = http://tuck.magentabackpack.com
+username = tindrum
+security_string = abcdef
 echolevel = 1
 
